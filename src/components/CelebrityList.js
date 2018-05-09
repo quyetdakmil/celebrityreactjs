@@ -9,6 +9,25 @@ class CelebrityList extends React.Component {
             items: []
         };
     }
+    
+    componentWillReceiveProps() {
+           fetch("https://crud9x.herokuapp.com/api/celebrities")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
 
     componentDidMount() {
         fetch("https://crud9x.herokuapp.com/api/celebrities")
@@ -20,9 +39,6 @@ class CelebrityList extends React.Component {
                         items: result
                     });
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
